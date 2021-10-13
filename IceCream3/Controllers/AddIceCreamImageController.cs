@@ -1,4 +1,4 @@
-using IceCream3.Models;
+﻿using IceCream3.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -19,7 +19,7 @@ using RestSharp;
 
 namespace IceCream3.Controllers
 {
-    
+
     public class AddIceCreamImageController : Controller
     {
 
@@ -46,7 +46,8 @@ namespace IceCream3.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public string Image2Base64(string path){
+        public string Image2Base64(string path)
+        {
             using (Image image = Image.FromFile("image.jpg"))
             {
                 using (MemoryStream m = new MemoryStream())
@@ -63,52 +64,35 @@ namespace IceCream3.Controllers
 
         static async Task<string> GetAPIAsync(string path)
         {
-                HttpClient client = new HttpClient();
-                string product = null;
-                HttpResponseMessage response = await client.GetAsync("https://api.imagga.com/v2/tags?Basic=acc_9a28b094c77bd01:6b3dfbe6096a12230a5a86c8d7acb754&image_url=https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80");
-                if (response.IsSuccessStatusCode)
-                    {
-                        product = await response.Content.ReadAsAsync<string>();
-                    }
-                return product;
+            HttpClient client = new HttpClient();
+            string product = null;
+            HttpResponseMessage response = await client.GetAsync("https://api.imagga.com/v2/tags?Basic=acc_9a28b094c77bd01:6b3dfbe6096a12230a5a86c8d7acb754&image_url=https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80");
+            if (response.IsSuccessStatusCode)
+            {
+                product = await response.Content.ReadAsAsync<string>();
+            }
+            return product;
         }
-        public string ImageIsIceCream(string image_path){
-            //Add CloudinaryDotNet using Nuget Package Manager or if using Package Manager Console: Install-Package CloudinaryDotNet
-            // Account account = new Account(
-            // "doc1d2moa",
-            // "227426427778973",
-            // "Y0SO9Osy65sUWk8SMKdOw76ENCM");
+        public bool ImageIsIceCream(string imageUrl)
+        {
+            List<string> Data = new List<string>();
+            ImaggaDAL ImageAdapter = new ImaggaDAL();
+            List<string> Result = ImageAdapter.CheckImage("https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80");
 
-            // Cloudinary cloudinary = new Cloudinary(account);
-            // cloudinary.Api.Secure = true;
+            List<string> IceCreamTags = new List<string>(){ "ice", "cream", "ice cream"};
             
-            // var uploadParams = new ImageUploadParams() 
-            // {
-            //     File = new FileDescription(@"/Users/ruthmiller/Documents/computer_science_studies/4th_year/cloud_computing/IceCream3/IceCream3/wwwroot/images/45min.jpg"),
-            //     Categorization = "imagga_tagging"
-            // };
-            // var uploadResult = cloudinary.Upload(uploadParams);
-            // Console.WriteLine(uploadResult);
-            // string jsonString = JsonSerializer.Serialize(uploadResult);
-            // Console.WriteLine(jsonString);
-            // return jsonString;
-            string Result = string.Empty;         
-            string Basic = "acc_9a28b094c77bd01:6b3dfbe6096a12230a5a86c8d7acb754";
-            string ImageUrl = "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80";
-       
-            var client = new RestClient("https://api.imagga.com/v2/tags");
-            client.Timeout = -1;
-
-            var request = new RestRequest(Method.GET);
-            request.AddParameter("Basic", Basic);
-            request.AddParameter("ImageUrl", ImageUrl);
-            //request.AddHeader("Authorization", String.Format("Basic {0}", basicAuthValue));
-
-            IRestResponse response = client.Execute(request);
-            Result = response.Content;
-            // Console.Write(response.Content);
-            Console.WriteLine(Result);
-            return Result;
+            foreach (string res in Result)
+            {
+                Console.WriteLine(res);
+            }
+            
+            foreach (string Tag in IceCreamTags)
+            {
+                if (Result.Contains(Tag)){
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
