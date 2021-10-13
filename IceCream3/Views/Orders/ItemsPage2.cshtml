@@ -1,7 +1,7 @@
-﻿@model IceCream3.Models.Order
+﻿@model IEnumerable<IceCream3.Models.Menu>
 
 @{
-    ViewData["Title"] = "Order Ice Cream";
+    ViewData["Title"] = "ItemsPage2";
 }
 
 <!DOCTYPE html>
@@ -16,48 +16,31 @@
 </head>
 <body>
     </li>
-    <li class="mdc-list-item" role="option">
-        <span class="mdc-list-item__ripple"></span>
-        <div class="mdc-card">
-            <div class="mdc-card__primary-action">
-                <div class="mdc-card__media mdc-card__media--square">
+    @foreach (var item in Model)
+    {
+        <li class="mdc-list-item" role="option">
+            <span class="mdc-list-item__ripple"></span>
+            <div class="mdc-card">
+                <div class="mdc-card__primary-action" >
+                    <div class="mdc-card__media mdc-card__media--square" style="background-image: url('@Html.DisplayFor(modelItem => item.ImageUrl)');">
+                    </div>
+                    <div class="mdc-card__ripple"></div>
                 </div>
-                <div class="mdc-card__ripple"></div>
-            </div>
-            @Html.DisplayNameFor(model => model.Flavor)
-            <div class="mdc-card__actions">
-                <div class="mdc-card__action-buttons">
-                    <a href="ClientDetailsForm.html">
-                        <button class="mdc-button mdc-card__action mdc-card__action--button">
-                            <div class="mdc-button__ripple"></div>
-                            <span class="mdc-button__label">Select</span>
-                        </button>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </li>
-    <li class="mdc-list-item" role="option">
-        <span class="mdc-list-item__ripple"></span>
-        <div class="mdc-card">
-            <div class="mdc-card__primary-action">
-                <div class="mdc-card__media mdc-card__media--square">
-                </div>
-                <div class="mdc-card__ripple"></div>
-            </div>
-            Lemmon Lime Ice Cream
-            <div class="mdc-card__actions">
-                <div class="mdc-card__action-buttons">
-                    <a href="ClientDetailsForm.html">
-                        <button class="mdc-button mdc-card__action mdc-card__action--button">
-                            <div class="mdc-button__ripple"></div>
-                            <span class="mdc-button__label">Select</span>
-                        </button>
-                    </a>
+                @Html.DisplayFor(modelItem => item.Name)
+                <div class="mdc-card__actions">
+                    <div class="mdc-card__action-buttons">
+                        <a href="@Url.Action("ClientDetailsForm", "Orders")">
+                            <button class="mdc-button mdc-card__action mdc-card__action--button">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label">Select</span>
+                            </button>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </li>
+        </li>
+    }
+
     </ul>
 </body>
 </html>

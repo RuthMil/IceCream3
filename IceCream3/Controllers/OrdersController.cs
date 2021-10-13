@@ -149,5 +149,18 @@ namespace IceCream3.Controllers
         {
             return _context.Order.Any(e => e.Id == id);
         }
+
+
+        public async Task<IActionResult> ItemsPage2()
+        {
+            return View(await _context.Menu.ToListAsync());
+        }
+
+
+        public IActionResult ClientDetailsForm()
+        {
+            return View();
+        }
+
     }
 }
