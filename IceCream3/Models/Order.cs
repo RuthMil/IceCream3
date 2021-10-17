@@ -31,7 +31,7 @@ namespace IceCream3.Models
         public string Street { get; set; }
 
         [Required]
-        public string HouseNum { get; set; }
+        public int HouseNum { get; set; }
 
         public Temperature MeasuredTemp { get; set; }
 

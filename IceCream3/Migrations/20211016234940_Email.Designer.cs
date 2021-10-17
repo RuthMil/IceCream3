@@ -4,14 +4,16 @@ using IceCream3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IceCream3.Migrations
 {
     [DbContext(typeof(IceCream3Context))]
-    partial class IceCream3ContextModelSnapshot : ModelSnapshot
+    [Migration("20211016234940_Email")]
+    partial class Email
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,8 +67,9 @@ namespace IceCream3.Migrations
                     b.Property<string>("Flavor")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("HouseNum")
-                        .HasColumnType("int");
+                    b.Property<string>("HouseNum")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()

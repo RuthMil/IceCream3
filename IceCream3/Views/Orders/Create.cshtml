@@ -150,7 +150,7 @@
                                 <div class="col-50">
                                     <div class="form-group">
                                         <label asp-for="HouseNum" for="number">Number</label>
-                                        <input asp-for="HouseNum" type="number" id="number" name="Number" placeholder=10>
+                                        <input asp-for="HouseNum" type="number" id="number" name="number" placeholder=10>
                                         <span asp-validation-for="HouseNum" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -199,6 +199,5 @@
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
-        Model.TimeOrdered = DateTime.Now;}
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
