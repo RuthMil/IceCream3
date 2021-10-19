@@ -13,7 +13,5 @@ namespace IceCream3.Models
 
         public float Humidity { get; set; }
         
-        public float AirPollution { get; set; }
-
     }
 }

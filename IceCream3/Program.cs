@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using IceCream3.Data;
+using IceCream3.Models;
 
 namespace IceCream3
 {

@@ -31,9 +31,9 @@ namespace IceCream3.Data
 
             var orders = new Order[]
             {
-            new Order{FirstName="Harry", LastName="Potter", Email="harry.potter@gmail.com", Flavor="Chocolate", Quantity=3, City="London", Street="Diagon", HouseNum=25, MeasuredTemp= new Temperature{Degree=22, AirPollution=100, Humidity=20}, TimeOrdered=DateTime.Parse("2021-10-01") },
-            new Order{FirstName="Ron", LastName="Weasley", Email="ron.weasley@gmail.com", Flavor="Vanila", Quantity=1, City="Hogsmid", Street="Magic", HouseNum=1, MeasuredTemp= new Temperature{Degree=22, AirPollution=100, Humidity=20}, TimeOrdered=DateTime.Parse("2021-10-01") },
-             new Order{FirstName="Hermione", LastName="Granger", Email="hermione.granger@gmail.com", Flavor="Strawberry", Quantity=1, City="Hogsmid", Street="Magic", HouseNum=1, MeasuredTemp= new Temperature{Degree=22, AirPollution=100, Humidity=20}, TimeOrdered=DateTime.Parse("2021-10-01") }
+            new Order{FirstName="Harry", LastName="Potter", Email="harry.potter@gmail.com", Flavor="Chocolate", Quantity=3, City="London", Street="Diagon", HouseNum=25, MeasuredTemp= new Temperature{Degree=21, Humidity=float.Parse("80.5")}, TimeOrdered=DateTime.Parse("2021-10-01") },
+            new Order{FirstName="Ron", LastName="Weasley", Email="ron.weasley@gmail.com", Flavor="Vanila", Quantity=1, City="Hogsmid", Street="Magic", HouseNum=1, MeasuredTemp= new Temperature{Degree=25, Humidity=float.Parse("50.5")}, TimeOrdered=DateTime.Parse("2021-10-01") },
+             new Order{FirstName="Hermione", LastName="Granger", Email="hermione.granger@gmail.com", Flavor="Strawberry", Quantity=1, City="Hogsmid", Street="Magic", HouseNum=1, MeasuredTemp= new Temperature{Degree=22, Humidity=float.Parse("70..6")}, TimeOrdered=DateTime.Parse("2021-10-01") }
            };
             foreach (Order o in orders)
             {

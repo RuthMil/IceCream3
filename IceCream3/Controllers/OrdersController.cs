@@ -168,5 +168,11 @@ namespace IceCream3.Controllers
             return View();
         }
 
+        public string GetWeather()
+        {
+            WeatherDAL ws = new WeatherDAL();
+            Temperature temp = ws.GetWeather("Jerusalem");
+            return temp.Degree.ToString() + "   " + temp.Humidity.ToString();
+        }
     }
 }
