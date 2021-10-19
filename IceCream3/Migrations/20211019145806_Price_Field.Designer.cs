@@ -4,14 +4,16 @@ using IceCream3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IceCream3.Migrations
 {
     [DbContext(typeof(IceCream3Context))]
-    partial class IceCream3ContextModelSnapshot : ModelSnapshot
+    [Migration("20211019145806_Price_Field")]
+    partial class Price_Field
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

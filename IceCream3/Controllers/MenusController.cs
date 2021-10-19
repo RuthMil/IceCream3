@@ -54,7 +54,7 @@ namespace IceCream3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,ImageUrl,DataAdded")] Menu menu)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,ImageUrl,Price,DateAdded")] Menu menu)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace IceCream3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,ImageUrl,DataAdded")] Menu menu)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,ImageUrl,Price,DateAdded")] Menu menu)
         {
             if (id != menu.Id)
             {

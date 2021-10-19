@@ -13,8 +13,10 @@ namespace IceCream3.Models
 
         public string ImageUrl { get; set; }
 
+        public float Price { get; set; }
+
         [DataType(DataType.Date)]
-        public DateTime DataAdded { get; set; }
+        public DateTime DateAdded { get; set; }
 
     }
 }
