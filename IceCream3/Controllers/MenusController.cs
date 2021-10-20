@@ -54,11 +54,12 @@ namespace IceCream3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,ImageUrl,Price,DateAdded")] Menu menu)
+        public async Task<IActionResult> Create([Bind("Id,Flavor,Description,ImageUrl,Price,DateAdded")] Menu menu)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(menu);
+                menu.DateAdded = DateTime.Now;
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

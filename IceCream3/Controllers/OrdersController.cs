@@ -54,11 +54,18 @@ namespace IceCream3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,TimeOrdered,Flavor,Quantity,City,Street,HouseNum")] Order order)
+        [Route("Orders/Create/{iceCreamId:int}")]
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,TimeOrdered,Flavor,Quantity,City,Street,HouseNum,MeasuredTemp")] Order order, int iceCreamId)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(order);
+                WeatherDAL weather = new WeatherDAL();
+                string city = order.City;
+                order.MeasuredTemp = weather.GetWeather(city);
+                order.TimeOrdered = DateTime.Now;
+                var menuItem = _context.Menu.Find(iceCreamId);
+                order.Flavor = menuItem.Flavor;
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

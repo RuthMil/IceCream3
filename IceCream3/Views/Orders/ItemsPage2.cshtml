@@ -21,16 +21,16 @@
         <li class="mdc-list-item" role="option">
             <span class="mdc-list-item__ripple"></span>
             <div class="mdc-card">
-                <div class="mdc-card__primary-action" >
-                    <div class="mdc-card__media mdc-card__media--square" style="background-image: url('@Html.DisplayFor(modelItem => item.ImageUrl)');">
+                <div class="mdc-card__primary-action" , style="block-size:400px">
+                    <div class="mdc-card__media mdc-card__media--square" style="height:300px; width:300px; min-width: 100%; min-height: 100%; display: flex; justify-content: center; align-items: center; background-image: url('@Html.DisplayFor(modelItem => item.ImageUrl)'); ">
                     </div>
                     <div class="mdc-card__ripple"></div>
                 </div>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.Flavor)
                 <div class="mdc-card__actions">
                     <div class="mdc-card__action-buttons">
-                        <a href="@Url.Action("Create", "Orders")">
-                            <button class="mdc-button mdc-card__action mdc-card__action--button">
+                        <a href="@Url.Action("Create", "Orders", new { iceCreamId=item.Id})">
+                            <button class="mdc-button mdc-card__action mdc-card__action--button mdc-button--raised" style="background-color: cornflowerblue">
                                 <div class="mdc-button__ripple"></div>
                                 <span class="mdc-button__label">Select</span>
                             </button>
