@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IceCream3.Data;
 using IceCream3.Models;
+using System.Net;
+using Firebase.Storage;
 
 namespace IceCream3.Controllers
 {
@@ -58,9 +60,13 @@ namespace IceCream3.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(menu);
-                menu.DateAdded = DateTime.Now;
-                await _context.SaveChangesAsync();
+                if (ImageIsIceCream(menu.ImageUrl))
+                {
+                    UploadToFireBase(menu.ImageUrl, menu.Flavor);
+                    _context.Add(menu);
+                    menu.DateAdded = DateTime.Now;
+                    await _context.SaveChangesAsync();
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(menu);
@@ -149,6 +155,32 @@ namespace IceCream3.Controllers
         private bool MenuExists(int id)
         {
             return _context.Menu.Any(e => e.Id == id);
+        }
+        public bool ImageIsIceCream(string imageUrl)
+        {
+            List<string> Data = new List<string>();
+            ImaggaDAL ImageAdapter = new ImaggaDAL();
+            List<string> Result = ImageAdapter.CheckImage(imageUrl);
+
+            List<string> IceCreamTags = new List<string>() { "ice", "cream", "ice cream" };
+
+            foreach (string Tag in IceCreamTags)
+            {
+                if (Result.Contains(Tag))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public async Task UploadToFireBase(string imageUrl,string name)
+        {
+            WebClient client = new WebClient();
+            string path = @"D:\" + name + ".jpg";
+            client.DownloadFile(imageUrl, path);//Download img to computer
+            var stream = System.IO.File.Open(path, System.IO.FileMode.Open);
+            var task = new FirebaseStorage("icecream3-53315.appspot.com").Child(name +".jpg").PutAsync(stream);
+            var url = await task;
         }
     }
 }
