@@ -28,7 +28,11 @@ namespace IceCream3
             request.AddHeader("Authorization", String.Format("Basic {0}", basicAuthValue));
 
             IRestResponse response = client.Execute(request);
-            // Console.Write(response.Content);
+            Console.Write(response.Content);
+            if (response == null)
+            {
+                return null;
+            }
             Result = ConvertToList(response.Content);
             return Result;
         }
@@ -36,6 +40,11 @@ namespace IceCream3
         public List<string> ConvertToList(string response)
         {
             List<string> Result = new List<string>();
+
+            if(response == "")
+            {
+                return Result;
+            }
 
             Root TheTags = JsonConvert.DeserializeObject<Root>(response);
             

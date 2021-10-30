@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IceCream3.Models
 {
@@ -10,6 +13,10 @@ namespace IceCream3.Models
         public string Flavor { get; set; }
 
         public string Description { get; set; }
+
+        [NotMapped]
+        [DisplayName("Upload Image")]
+        public IFormFile ImageFile { get; set; }
 
         public string ImageUrl { get; set; }
 

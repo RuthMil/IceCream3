@@ -9,16 +9,22 @@ using IceCream3.Data;
 using IceCream3.Models;
 using System.Net;
 using Firebase.Storage;
+using Firebase.Auth;
+using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 
 namespace IceCream3.Controllers
 {
     public class MenusController : Controller
     {
         private readonly IceCream3Context _context;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public MenusController(IceCream3Context context)
+        public MenusController(IceCream3Context context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            this._hostEnvironment = hostEnvironment;
         }
 
         // GET: Menus
@@ -56,16 +62,18 @@ namespace IceCream3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Flavor,Description,ImageUrl,Price,DateAdded")] Menu menu)
+        public async Task<IActionResult> Create([Bind("Id,Flavor,Description,ImageFile,ImageUrl,Price,DateAdded")] Menu menu)
         {
             if (ModelState.IsValid)
             {
-                if (ImageIsIceCream(menu.ImageUrl))
+                string fireBaseUrl = await UploadToFireBase(menu.ImageFile, menu.Flavor);
+                if (ImageIsIceCream(fireBaseUrl))
                 {
-                    UploadToFireBase(menu.ImageUrl, menu.Flavor);
                     _context.Add(menu);
                     menu.DateAdded = DateTime.Now;
+                    menu.ImageUrl = fireBaseUrl;
                     await _context.SaveChangesAsync();
+
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -93,7 +101,7 @@ namespace IceCream3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,ImageUrl,Price,DateAdded")] Menu menu)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,ImageFile,ImageUrl,Price,DateAdded")] Menu menu)
         {
             if (id != menu.Id)
             {
@@ -173,14 +181,34 @@ namespace IceCream3.Controllers
             }
             return false;
         }
-        public async Task UploadToFireBase(string imageUrl,string name)
+        public async Task<string> UploadToFireBase(IFormFile image, string name)
         {
-            WebClient client = new WebClient();
-            string path = @"D:\" + name + ".jpg";
-            client.DownloadFile(imageUrl, path);//Download img to computer
-            var stream = System.IO.File.Open(path, System.IO.FileMode.Open);
-            var task = new FirebaseStorage("icecream3-53315.appspot.com").Child(name +".jpg").PutAsync(stream);
-            var url = await task;
+            //icecream-66e2f
+            //nam5
+            //
+            //var auth = new FirebaseAuthProvider(new FirebaseConfig("AIzaSyCoBgC6vDNDQfbYmSaH7C_mMyvvqRofiCM"));
+            //var a = await auth.SignInWithEmailAndPasswordAsync("", "password");
+            string wwwRootPath = _hostEnvironment.WebRootPath;
+            string extension = Path.GetExtension(image.FileName);
+            string path = Path.Combine(wwwRootPath + "/images/", name + extension);
+
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await image.CopyToAsync(stream);
+            }
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                var task = new FirebaseStorage("icecream-66e2f.appspot.com").Child(name + ".jpg").PutAsync(stream);
+                string url = await task;
+                return url;
+            }
+            //using (FileStream stream = System.IO.File.Open(path, FileMode.Open))
+            //{
+            //    var task = new FirebaseStorage("icecream-66e2f.appspot.com").Child(name + ".jpg").PutAsync(stream);
+            //    //task.Progress.ProgressChanged += (s, e) => Console.WriteLine($"Progress: {e.Percentage} %");
+            //    string url = await task;
+            //    return url;
+            //}
         }
     }
 }
