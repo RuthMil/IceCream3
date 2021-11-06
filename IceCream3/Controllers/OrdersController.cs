@@ -181,5 +181,13 @@ namespace IceCream3.Controllers
             Temperature temp = ws.GetWeather("Jerusalem");
             return temp.Degree.ToString() + "   " + temp.Humidity.ToString();
         }
+
+        public void Export()
+        {
+            var orders = _context.Order
+                .Include(c => new List<dynamic> { c.City, c.MeasuredTemp})
+                .AsNoTracking();
+            //var temperature = _context.
+        }
     }
 }

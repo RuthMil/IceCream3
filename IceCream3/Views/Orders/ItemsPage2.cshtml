@@ -26,7 +26,14 @@
                     </div>
                     <div class="mdc-card__ripple"></div>
                 </div>
+                Flavor:
                 @Html.DisplayFor(modelItem => item.Flavor)
+                <br />
+                Description:
+                @Html.DisplayFor(modelItem => item.Description)
+                <br />
+                Price:
+                @Html.DisplayFor(modelItem => item.Price)
                 <div class="mdc-card__actions">
                     <div class="mdc-card__action-buttons">
                         <a href="@Url.Action("Create", "Orders", new { iceCreamId=item.Id})">

@@ -1,0 +1,13 @@
+﻿city,humidity,temperature,flavor
+London,25,7,Chocolate
+Hogsmid,1,8,Vanila
+Hogsmid,1,9,Strawberry
+Hogsmid,0,14,Strawberry
+Hogsmid,2,15,Strawberry
+Hogsmid,0,14,Vanilla
+Hogsmid,2,13,Chocolate
+New York,0,14,Pistachio
+Hogsmid,5,20,Chocolate
+Hogsmid,0,20,Moca
+Tel Aviv,2,15,Moca
+Jerusalem,0,16,Chocolate

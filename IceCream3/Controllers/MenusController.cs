@@ -20,6 +20,7 @@ namespace IceCream3.Controllers
     {
         private readonly IceCream3Context _context;
         private readonly IWebHostEnvironment _hostEnvironment;
+        public static readonly List<string> ImageExtensions = new() { ".JPG", ".JPEG", ".BMP", ".PNG", "TIFF", "TIF" };
 
         public MenusController(IceCream3Context context, IWebHostEnvironment hostEnvironment)
         {
@@ -66,16 +67,27 @@ namespace IceCream3.Controllers
         {
             if (ModelState.IsValid)
             {
-                string fireBaseUrl = await UploadToFireBase(menu.ImageFile, menu.Flavor);
-                if (ImageIsIceCream(fireBaseUrl))
+                if (ImageExtensions.Contains(Path.GetExtension(menu.ImageFile.FileName).ToUpperInvariant()))
                 {
-                    _context.Add(menu);
-                    menu.DateAdded = DateTime.Now;
-                    menu.ImageUrl = fireBaseUrl;
-                    await _context.SaveChangesAsync();
-
+                    string fireBaseUrl = await UploadToFireBase(menu.ImageFile, menu.Flavor);
+                    if (ImageIsIceCream(fireBaseUrl))
+                    {
+                        _context.Add(menu);
+                        menu.DateAdded = DateTime.Now;
+                        menu.ImageUrl = fireBaseUrl;
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(nameof(Menu.ImageFile), "Image does not contain ice-cream! Please provide an ice-cream image");
+                    }
                 }
-                return RedirectToAction(nameof(Index));
+                else
+                {
+                    ModelState.AddModelError(nameof(Menu.ImageFile), "The file must be an image from type: jpeg, jpg, png, bmp, tiff, tif");
+                }
+
             }
             return View(menu);
         }
@@ -101,7 +113,7 @@ namespace IceCream3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,ImageFile,ImageUrl,Price,DateAdded")] Menu menu)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Flavor,Description,ImageFile,ImageUrl,Price,DateAdded")] Menu menu)
         {
             if (id != menu.Id)
             {
@@ -183,9 +195,6 @@ namespace IceCream3.Controllers
         }
         public async Task<string> UploadToFireBase(IFormFile image, string name)
         {
-            //icecream-66e2f
-            //nam5
-            //
             //var auth = new FirebaseAuthProvider(new FirebaseConfig("AIzaSyCoBgC6vDNDQfbYmSaH7C_mMyvvqRofiCM"));
             //var a = await auth.SignInWithEmailAndPasswordAsync("", "password");
             string wwwRootPath = _hostEnvironment.WebRootPath;
@@ -209,6 +218,13 @@ namespace IceCream3.Controllers
             //    string url = await task;
             //    return url;
             //}
+        }
+
+        public async Task<string> GetModel()
+        {
+            BigMLModel myModel = new BigMLModel();
+            bool res = await myModel.CreateModel();
+            return "success";
         }
     }
 }
