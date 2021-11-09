@@ -220,10 +220,10 @@ namespace IceCream3.Controllers
             //}
         }
 
-        public async Task<string> GetModel()
+        public async Task<string> GetModel(string dataFilePath)
         {
             BigMLModel myModel = new BigMLModel();
-            bool res = await myModel.CreateModel();
+            bool res = await myModel.CreateModel(dataFilePath);
             return "success";
         }
     }

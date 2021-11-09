@@ -14,7 +14,7 @@ namespace IceCream3
     /// </summary>
     class BigMLModel
     {
-        public async Task<bool> CreateModel()
+        public async Task<bool> CreateModel(string dataFilePath)
         {
             string User = "RMI1234";
             string ApiKey = "62065a8a439292dec60532884585a9828ddb4b10";
@@ -28,7 +28,7 @@ namespace IceCream3
             string projectID = p.Resource;
 
             // Create a new source
-            Source source = await client.CreateSource("orders_data.csv", "Data");
+            Source source = await client.CreateSource(dataFilePath, "Data");
             while ((source = await client.Get<Source>(source.Resource))
                                     .StatusMessage.NotSuccessOrFail())
             {
