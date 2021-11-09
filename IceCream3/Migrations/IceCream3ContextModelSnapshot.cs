@@ -30,9 +30,11 @@ namespace IceCream3.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Flavor")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
@@ -75,9 +77,6 @@ namespace IceCream3.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("MeasuredTempId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("Quantity")
                         .HasColumnType("int");
 
@@ -85,12 +84,13 @@ namespace IceCream3.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TemperatureId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("TimeOrdered")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MeasuredTempId");
 
                     b.ToTable("Order");
                 });
@@ -111,15 +111,6 @@ namespace IceCream3.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Temperature");
-                });
-
-            modelBuilder.Entity("IceCream3.Models.Order", b =>
-                {
-                    b.HasOne("IceCream3.Models.Temperature", "MeasuredTemp")
-                        .WithMany()
-                        .HasForeignKey("MeasuredTempId");
-
-                    b.Navigation("MeasuredTemp");
                 });
 #pragma warning restore 612, 618
         }

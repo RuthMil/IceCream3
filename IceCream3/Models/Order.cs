@@ -33,7 +33,7 @@ namespace IceCream3.Models
         [Required]
         public int HouseNum { get; set; }
 
-        public Temperature MeasuredTemp { get; set; }
+        public int TemperatureId { get; set; }
 
     }
 }

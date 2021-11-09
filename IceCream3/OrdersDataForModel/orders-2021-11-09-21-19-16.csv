@@ -1,0 +1,6 @@
+Flavor,City,Quantity,DayOfWeek,Season,Degree,Humidity
+Hogsmid,1,Friday,Autumn,,,Strawberry
+Hogsmid,1,Friday,Autumn,,,Vanila
+London,3,Friday,Autumn,,,Chocolate
+Jerusalem,,Tuesday,Autumn,,,Vanilla
+Jerusalem,,Tuesday,Autumn,19.82,30,Vanilla

@@ -21,6 +21,17 @@ namespace IceCream3.Controllers
         private readonly IceCream3Context _context;
         private readonly IWebHostEnvironment _hostEnvironment;
         public static readonly List<string> ImageExtensions = new() { ".JPG", ".JPEG", ".BMP", ".PNG", "TIFF", "TIF" };
+        public enum Seasons
+        {
+            /// Spring begins on the 80th day, on a leap year it begins one the 81
+            Spring,
+            /// Summer begins on the 172nd day, on a leap year it begins one the 173
+            Summer,
+            /// Autumn the 266th, on a leap year it begins one the 267
+            Autumn,
+            /// Winter the 355th, on a leap year it begins one the 356
+            Winter
+        }
 
         public MenusController(IceCream3Context context, IWebHostEnvironment hostEnvironment)
         {
@@ -220,9 +231,59 @@ namespace IceCream3.Controllers
             //}
         }
 
-        public async Task<string> GetModel(string dataFilePath)
+        public static Seasons GetSeason(DateTime date)
+        {
+            /* Astronomically Spring begins on March 21st, the 80th day of the year. 
+             * Summer begins on the 172nd day, Autumn, the 266th and Winter the 355th.
+             * Of course, on a leap year add one day to each, 81, 173, 267 and 356.*/
+
+            int doy = date.DayOfYear - Convert.ToInt32((DateTime.IsLeapYear(date.Year)) && date.DayOfYear > 59);
+
+            if (doy < 80 || doy >= 355) return Seasons.Winter;
+
+            if (doy >= 80 && doy < 172) return Seasons.Spring;
+
+            if (doy >= 172 && doy < 266) return Seasons.Summer;
+
+            return Seasons.Autumn;
+        }
+
+        public string ExportOrders2CSV()
+        {
+            var orders = this._context.Order;
+            string currentTimeStamp = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+            string outputPath = $"OrdersDataForModel\\orders-{currentTimeStamp}.csv";
+            using (StreamWriter writer = new StreamWriter(outputPath))
+            {
+                writer.WriteLine("City,Quantity,DayOfWeek,Season,Degree,Humidity,Flavor");
+                foreach (Order o in orders)
+                {
+                    string degree = "0";
+                    string humidity = "0";
+                    string quantity = o.Quantity.ToString();
+                    if (quantity == "")
+                    {
+                        quantity = "0";
+                    }
+
+                    Temperature temp = this._context.Temperature.FirstOrDefault(m => m.Id == o.TemperatureId);
+                    if (temp != null)
+                    {
+                        degree = temp.Degree.ToString();
+                        humidity = temp.Humidity.ToString();
+                    }
+                    writer.WriteLine(o.City + "," + quantity + "," +
+                    o.TimeOrdered.DayOfWeek.ToString() + "," + GetSeason(o.TimeOrdered).ToString()
+                    + "," + degree + "," + humidity + "," + o.Flavor);
+                }
+            }
+            return outputPath;
+        }
+
+        public async Task<string> GetModel()
         {
             BigMLModel myModel = new BigMLModel();
+            string dataFilePath = ExportOrders2CSV();
             bool res = await myModel.CreateModel(dataFilePath);
             return "success";
         }

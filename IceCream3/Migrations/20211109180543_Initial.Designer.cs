@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IceCream3.Migrations
 {
     [DbContext(typeof(IceCream3Context))]
-    [Migration("20211013201309_AddedOrders")]
-    partial class AddedOrders
+    [Migration("20211109180543_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,17 +28,22 @@ namespace IceCream3.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DataAdded")
+                    b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Flavor")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
@@ -53,35 +58,41 @@ namespace IceCream3.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Flavor")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("HouseNum")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("HouseNum")
+                        .HasColumnType("int");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("MeasuredTempId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<string>("Street")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TemperatureId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("TimeOrdered")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MeasuredTempId");
 
                     b.ToTable("Order");
                 });
@@ -93,9 +104,6 @@ namespace IceCream3.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<float>("AirPollution")
-                        .HasColumnType("real");
-
                     b.Property<float>("Degree")
                         .HasColumnType("real");
 
@@ -105,15 +113,6 @@ namespace IceCream3.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Temperature");
-                });
-
-            modelBuilder.Entity("IceCream3.Models.Order", b =>
-                {
-                    b.HasOne("IceCream3.Models.Temperature", "MeasuredTemp")
-                        .WithMany()
-                        .HasForeignKey("MeasuredTempId");
-
-                    b.Navigation("MeasuredTemp");
                 });
 #pragma warning restore 612, 618
         }
