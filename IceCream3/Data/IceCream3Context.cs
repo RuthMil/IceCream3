@@ -19,5 +19,7 @@ namespace IceCream3.Data
         public DbSet<IceCream3.Models.Order> Order { get; set; }
 
         public DbSet<IceCream3.Models.Temperature> Temperature { get; set; }
+
+        public DbSet<IceCream3.Models.User> User { get; set; }
     }
 }

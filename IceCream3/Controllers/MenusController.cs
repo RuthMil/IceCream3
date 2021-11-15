@@ -13,6 +13,7 @@ using Firebase.Auth;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
+using System.Collections.Specialized;
 
 namespace IceCream3.Controllers
 {
@@ -280,12 +281,34 @@ namespace IceCream3.Controllers
             return outputPath;
         }
 
-        public async Task<string> GetModel()
+        [HttpGet]
+        public IActionResult SellPrediction()
         {
+            return View();
+        }
+
+        [HttpPost, ActionName("SellPrediction")]
+        public async Task<IActionResult> SellPrediction(string args = "")
+        {
+            string city = Request.Form["City"];
+            string quantity = Request.Form["quantity"];
+            string dayOfWeek = Request.Form["DayOfWeek"];
+            string season = Request.Form["Season"];
+            string degree = Request.Form["Degree"];
+            string humidity = Request.Form["Humidity"];
             BigMLModel myModel = new BigMLModel();
             string dataFilePath = ExportOrders2CSV();
             bool res = await myModel.CreateModel(dataFilePath);
-            return "success";
+            string prediction = myModel.GetPrediction(city, quantity, dayOfWeek, season, degree, humidity);
+            Console.WriteLine("*********Predicted flavor: ");
+            Console.WriteLine(prediction);
+            return RedirectToAction("PresentPrediction", "Menus", new { prediction=prediction});
+        }
+
+        public IActionResult PresentPrediction(string prediction)
+        {
+            ViewData["Prediction"] = prediction;
+            return View();
         }
     }
 }

@@ -14,6 +14,7 @@ namespace IceCream3
     /// </summary>
     class BigMLModel
     {
+        static Model.LocalModel localModel = null;
         public async Task<bool> CreateModel(string dataFilePath)
         {
             string User = "RMI1234";
@@ -60,28 +61,31 @@ namespace IceCream3
             Console.WriteLine(model.Object);
             Console.WriteLine(model.ObjectiveField);
             // Transforms JSON in tree structure
-            Model.LocalModel localModel = model.ModelStructure();
-
-            // --- Specify prediction inputs and calculate the prediction ---
-            // input data can be provided by fieldID or by name
-            Dictionary<string, dynamic> inputData = new Dictionary<string, dynamic>();
-            inputData.Add("City", "Jerusalem");
-            inputData.Add("Quantity", 1);
-            inputData.Add("DayOfWeek", "Tuesday");
-            inputData.Add("Season", "Autumn");
-            inputData.Add("Degree", 19.2);
-            inputData.Add("humidity", 22);
-            
-            // Other values are ommited or unknown
-            Model.Node prediction = localModel.predict(inputData);
-
-            Console.WriteLine("result = {0}, expected = {1}", prediction.Output, "Vanilla");
-
+            localModel = model.ModelStructure();
             //// Set the project and update the Source
             //JObject changes = new JObject();
             //changes["project"] = projectID;
             //source = await client.Update<Source>(source.Resource, changes);
             return true;
+        }
+
+        public string GetPrediction(string city, string quantity, string dayOfWeek, string season, string degree, string humidity)
+        {
+            // --- Specify prediction inputs and calculate the prediction ---
+            // input data can be provided by fieldID or by name
+            Dictionary<string, dynamic> inputData = new Dictionary<string, dynamic>();
+            inputData.Add("City", city);
+            inputData.Add("Quantity", int.Parse(quantity));
+            inputData.Add("DayOfWeek", dayOfWeek);
+            inputData.Add("Season", season);
+            inputData.Add("Degree", float.Parse(degree));
+            inputData.Add("Humidity", float.Parse(humidity));
+
+            // Other values are ommited or unknown
+            Model.Node prediction = localModel.predict(inputData);
+
+            Console.WriteLine("result = {0}, expected = {1}", prediction.Output, "Vanilla");
+            return prediction.Output;
         }
     }
 }
