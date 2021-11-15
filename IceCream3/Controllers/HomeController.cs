@@ -25,7 +25,7 @@ namespace IceCream3.Controllers
             return View();
         }
 
-        public IActionResult IndexAdmin(string layoutName)
+        public IActionResult ChangeUserMode(string layoutName)
         {
             LayoutName = layoutName;
             return RedirectToAction("Index", "Home");
@@ -40,6 +40,16 @@ namespace IceCream3.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        public IActionResult Contact()
+        {
+            return View();
         }
     }
 }

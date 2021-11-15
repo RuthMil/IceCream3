@@ -14,22 +14,14 @@
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
 </head>
 <body>
-    <div class="mdc-banner" role="banner">
-        <div class="mdc-banner__content"
-             role="alertdialog"
-             aria-live="assertive">
-            <div class="mdc-banner__graphic-text-wrapper">
-                <div class="mdc-banner__text">
-                    There was a problem processing a transaction on your credit card.
-                </div>
-            </div>
-            <div class="mdc-banner__actions">
-                <button type="button" class="mdc-button mdc-banner__primary-action">
-                    <div class="mdc-button__ripple"></div>
-                    <div class="mdc-button__label">Fix it</div>
-                </button>
-            </div>
-        </div>
-    </div>
+    <h1 style="color:cornflowerblue">
+        Your order was completed successfully!
+    </h1>
+    <a href="@Url.Action("ItemsPage2", "Orders")">
+        <button class="mdc-button mdc-card__action mdc-card__action--button mdc-button--raised" style="background-color: cornflowerblue">
+            <div class="mdc-button__ripple"></div>
+            <span class="mdc-button__label">Back to ice creams</span>
+        </button>
+    </a>
 </body>
 </html>

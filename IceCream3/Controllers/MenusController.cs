@@ -305,10 +305,12 @@ namespace IceCream3.Controllers
             return RedirectToAction("PresentPrediction", "Menus", new { prediction=prediction});
         }
 
-        public IActionResult PresentPrediction(string prediction)
+        public async Task<IActionResult> PresentPrediction(string prediction)
         {
             ViewData["Prediction"] = prediction;
-            return View();
+            var menu = await _context.Menu
+                .FirstOrDefaultAsync(m => m.Flavor == prediction);
+            return View(menu);
         }
     }
 }

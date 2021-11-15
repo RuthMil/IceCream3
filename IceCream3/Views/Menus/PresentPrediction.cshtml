@@ -1,4 +1,37 @@
-﻿@{
+﻿@model IceCream3.Models.Menu
+@{
     Layout = "_LayoutAdmin";
 }
-<h1>The Flavor that is predicted to be most sell is: @ViewData["Prediction"]</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="bundle.css">
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="css/ItemsPage.css" />
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <style type="text/css">
+        .flavor {
+            color: lightpink;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="color:cornflowerblue">
+        The Flavor that is predicted to be most sell is:
+    </h1>
+    <h1><i class="flavor">@ViewData["Prediction"]</i></h1>
+    <li class="mdc-list-item" role="option">
+        <span class="mdc-list-item__ripple"></span>
+        <div class="mdc-card">
+            <div class="mdc-card__primary-action" , style="block-size:400px">
+                <div class="mdc-card__media mdc-card__media--square" style="height:300px; width:300px; min-width: 100%; min-height: 100%; display: flex; justify-content: center; align-items: center; background-image: url('@Html.DisplayFor(model => model.ImageUrl)'); ">
+                </div>
+                <div class="mdc-card__ripple"></div>
+            </div>
+        </div>
+    </li>
+</body>
+</html>
+

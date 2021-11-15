@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Views\Home\css\demo.css" />
     <Content Include="Views\Home\css\Home.css">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
@@ -18,6 +19,7 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Include="Views\Home\css\style.css" />
   </ItemGroup>
 
   <ItemGroup>
