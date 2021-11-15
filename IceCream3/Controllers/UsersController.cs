@@ -161,7 +161,9 @@ namespace IceCream3.Controllers
         {
             foreach (var item in _context.User)
                 if (item.Email == email && item.Password == password)
-                    return RedirectToAction("Index", "Menus");
+                {
+                    return RedirectToAction("IndexAdmin", "Home", new { layoutName = "_LayoutAdmin" }) ;
+                }
             return RedirectToAction("ErrorLogin", "Users");
         }
 

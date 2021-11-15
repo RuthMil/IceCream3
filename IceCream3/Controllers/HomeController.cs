@@ -12,6 +12,7 @@ namespace IceCream3.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        static string LayoutName = "_Layout";
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -20,7 +21,14 @@ namespace IceCream3.Controllers
 
         public IActionResult Index()
         {
+            ViewData["Layout"] = LayoutName;
             return View();
+        }
+
+        public IActionResult IndexAdmin(string layoutName)
+        {
+            LayoutName = layoutName;
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Privacy()

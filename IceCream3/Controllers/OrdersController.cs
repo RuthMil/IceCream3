@@ -74,7 +74,7 @@ namespace IceCream3.Controllers
                 var menuItem = _context.Menu.Find(iceCreamId);
                 order.Flavor = menuItem.Flavor;
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("OrderSuccess", "Orders");
             }
             return View(order);
         }
@@ -170,23 +170,16 @@ namespace IceCream3.Controllers
             return View(await _context.Menu.ToListAsync());
         }
 
-
-        public IActionResult ClientDetailsForm()
-        {
-            return View();
-        }
-
-
-        public IActionResult Payment()
-        {
-            return View();
-        }
-
         public string GetWeather()
         {
             WeatherDAL ws = new WeatherDAL();
             Temperature temp = ws.GetWeather("Jerusalem");
             return temp.Degree.ToString() + "   " + temp.Humidity.ToString();
+        }
+        
+        public IActionResult OrderSuccess()
+        {
+            return View();
         }
     }
 }
