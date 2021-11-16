@@ -256,16 +256,11 @@ namespace IceCream3.Controllers
             string outputPath = $"OrdersDataForModel\\orders-{currentTimeStamp}.csv";
             using (StreamWriter writer = new StreamWriter(outputPath))
             {
-                writer.WriteLine("City,Quantity,DayOfWeek,Season,Degree,Humidity,Flavor");
+                writer.WriteLine("City,DayOfWeek,Season,Degree,Humidity,Flavor");
                 foreach (Order o in orders)
                 {
                     string degree = "0";
                     string humidity = "0";
-                    string quantity = o.Quantity.ToString();
-                    if (quantity == "")
-                    {
-                        quantity = "0";
-                    }
 
                     Temperature temp = this._context.Temperature.FirstOrDefault(m => m.Id == o.TemperatureId);
                     if (temp != null)
@@ -273,9 +268,9 @@ namespace IceCream3.Controllers
                         degree = temp.Degree.ToString();
                         humidity = temp.Humidity.ToString();
                     }
-                    writer.WriteLine(o.City + "," + quantity + "," +
-                    o.TimeOrdered.DayOfWeek.ToString() + "," + GetSeason(o.TimeOrdered).ToString()
-                    + "," + degree + "," + humidity + "," + o.Flavor);
+                    writer.WriteLine(o.City + "," + o.TimeOrdered.DayOfWeek.ToString() + "," 
+                        + GetSeason(o.TimeOrdered).ToString() + "," + degree + "," + humidity
+                        + "," + o.Flavor);
                 }
             }
             return outputPath;
@@ -291,7 +286,6 @@ namespace IceCream3.Controllers
         public async Task<IActionResult> SellPrediction(string args = "")
         {
             string city = Request.Form["City"];
-            string quantity = Request.Form["quantity"];
             string dayOfWeek = Request.Form["DayOfWeek"];
             string season = Request.Form["Season"];
             string degree = Request.Form["Degree"];
@@ -299,7 +293,7 @@ namespace IceCream3.Controllers
             BigMLModel myModel = new BigMLModel();
             string dataFilePath = ExportOrders2CSV();
             bool res = await myModel.CreateModel(dataFilePath);
-            string prediction = myModel.GetPrediction(city, quantity, dayOfWeek, season, degree, humidity);
+            string prediction = myModel.GetPrediction(city, dayOfWeek, season, degree, humidity);
             Console.WriteLine("*********Predicted flavor: ");
             Console.WriteLine(prediction);
             return RedirectToAction("PresentPrediction", "Menus", new { prediction=prediction});

@@ -43,7 +43,7 @@ namespace IceCream3
             Console.WriteLine(dataset.StatusMessage.ToString());
 
             // Default model from dataset
-            string[] inputFields = { "City", "Quantity", "DayOfWeek", "Season", "Degree", "Humidity" };
+            string[] inputFields = { "City", "DayOfWeek", "Season", "Degree", "Humidity" };
             //string[] inputFields = { "000000","000001","000002","000003", "000004", "000005" };
             var parameters = new Model.Arguments();
             parameters.Add("name", "sell_model");
@@ -69,13 +69,12 @@ namespace IceCream3
             return true;
         }
 
-        public string GetPrediction(string city, string quantity, string dayOfWeek, string season, string degree, string humidity)
+        public string GetPrediction(string city, string dayOfWeek, string season, string degree, string humidity)
         {
             // --- Specify prediction inputs and calculate the prediction ---
             // input data can be provided by fieldID or by name
             Dictionary<string, dynamic> inputData = new Dictionary<string, dynamic>();
             inputData.Add("City", city);
-            inputData.Add("Quantity", int.Parse(quantity));
             inputData.Add("DayOfWeek", dayOfWeek);
             inputData.Add("Season", season);
             inputData.Add("Degree", float.Parse(degree));

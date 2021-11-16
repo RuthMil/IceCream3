@@ -1,0 +1,25 @@
+﻿@model IceCream3.Models.Order
+@{
+    Layout = "_LayoutAdmin";
+}
+
+
+<div class="row">
+    <div class="col-md-4">
+        <datalist id="flavors">
+            <option value="Strawberry" />
+            <option value="Chocolate" />
+            <option value="Vanilla" />
+            <option value="Pistachio" />
+        </datalist>
+        <h2 style="color:cornflowerblue">Choose Flavor you want to get analysis for</h2>
+        <form method="post" asp-action="Analytics">
+            <div class="form-group">
+                <input list="flavors" name="Flavor" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Get Analysis" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

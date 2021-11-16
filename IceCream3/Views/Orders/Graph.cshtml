@@ -1,0 +1,96 @@
+﻿@model IEnumerable<IceCream3.Models.Order>
+@{
+    Layout = "_LayoutAdmin";
+}
+@{
+    var desiredFlavor = ViewData["desiredFlavor"].ToString();
+    // IDictionary<int, int> flavorCounts = new Dictionary<int, int>();
+    int dateCounter = 0;
+    var queryFlavors =
+        from item in Model
+        group item.Flavor by item.TimeOrdered.ToString("yyyy-MM-dd") into newGroup
+        orderby newGroup.Key
+        select newGroup;
+
+    int[] flavorCounts = new int[queryFlavors.Count()];
+    string[] dates = new string[queryFlavors.Count()];
+    string values = "[";
+    foreach (var flavorGroups in queryFlavors)
+    {
+        Console.WriteLine($"Key: {flavorGroups.Key}");
+        flavorCounts[dateCounter] = 0;
+        dates[dateCounter] = flavorGroups.Key;
+        foreach (var flavor in flavorGroups)
+        {
+            Console.WriteLine($"\t{flavor}");
+            if (flavor == desiredFlavor)
+            {
+                flavorCounts[dateCounter] += 1;
+            }
+        }
+        dateCounter += 1;
+    }
+    dateCounter = 0;
+    while (dateCounter < flavorCounts.Length)
+    {
+        values += "{";
+        values += $"x: '{dates[dateCounter]}', y: {flavorCounts[dateCounter].ToString()}";
+        values += "},";
+        dateCounter += 1;
+    }
+    values = values.Remove(values.Length - 1, 1);
+    values += "]";
+    Console.WriteLine("****Dates:");
+    foreach (var date in dates)
+    {
+        Console.WriteLine(date);
+    }
+    Console.WriteLine("****Flavors counts:");
+    foreach (var item in flavorCounts)
+    {
+        Console.WriteLine(item);
+    }
+    Console.WriteLine(values);
+}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script type="text/javascript">
+        window.onload = function () {
+            var values = "@values";
+            console.log(values);
+            values = values.replace(/&#x27;/g, "'");
+            values = eval(values);
+            console.log(values);
+            var finalValues = [];
+            for (var i = 0, size = values.length; i < size; i++) {
+                var item = values[i];
+                finalValues.push({ x: new Date(item["x"]), y: item["y"] });
+                console.log(finalValues[i]);
+            }
+            var chart = new CanvasJS.Chart("chartContainer",
+                {
+
+                    title: {
+                        text: "@desiredFlavor" + " Sales - per day"
+                    },
+                    data: [
+                        {
+                            type: "line",
+
+                            dataPoints: finalValues
+                        }
+                    ]
+                });
+
+            chart.render();
+        }
+    </script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+<body>
+    <div id="chartContainer" style="height: 300px; width: 100%;">
+    </div>
+</body>
+</html>
