@@ -4,10 +4,14 @@
 }
 @{
     var desiredFlavor = ViewData["desiredFlavor"].ToString();
-    // IDictionary<int, int> flavorCounts = new Dictionary<int, int>();
+    var startDate = (DateTime)ViewData["startDate"];
+    var endDate = (DateTime)ViewData["endDate"];
+    Console.WriteLine(startDate);
+    Console.WriteLine(endDate);
+    var filteredModel = Model.ToList().FindAll(e => e.TimeOrdered >= startDate && e.TimeOrdered <= endDate);
     int dateCounter = 0;
     var queryFlavors =
-        from item in Model
+        from item in filteredModel
         group item.Flavor by item.TimeOrdered.ToString("yyyy-MM-dd") into newGroup
         orderby newGroup.Key
         select newGroup;

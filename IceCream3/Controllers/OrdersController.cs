@@ -216,23 +216,13 @@ namespace IceCream3.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Graph(string flavor)
+        public async Task<IActionResult> Graph(string flavor, DateTime startDate, DateTime endDate)
         {
             ViewData["desiredFlavor"] = flavor;
+            ViewData["startDate"] = startDate;
+            ViewData["endDate"] = endDate;
             return View(await _context.Order.ToListAsync());
         }
-
-        [HttpGet]
-        public IActionResult Analytics()
-        {
-            return View();
-        }
-
-        [HttpPost, ActionName("Analytics")]
-        public IActionResult Analytics(string args="")
-        {
-            string flavor = Request.Form["Flavor"].ToString();
-            return RedirectToAction("Graph", "Orders", new { flavor=flavor});
-        }
+        
     }
 }

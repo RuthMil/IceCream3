@@ -5,26 +5,40 @@
 
 <div class="row">
     <div class="col-md-4">
+        <datalist id="days">
+            <option value="Sunday" />
+            <option value="Monday" />
+            <option value="Tueday" />
+            <option value="Wednesday" />
+            <option value="Thursday" />
+            <option value="Friday" />
+        </datalist>
+        <datalist id="seasons">
+            <option value="Winter" />
+            <option value="Spring" />
+            <option value="Summer" />
+            <option value="Autumn" />
+        </datalist>
         <form asp-action="SellPrediction" method="post">
             <div class="form-group">
                 <label for="City" class="control-label">City</label>
-                <input for="City" class="form-control" name="City"/>
+                <input for="City" class="form-control" name="City" />
             </div>
             <div class="form-group">
-                <label for="DayOfWeek" class="control-label">DayOfWeek</label>
-                <input for="DayOfWeek" class="form-control" name="DayOfWeek"/>
+                <label for="DayOfWeek" class="control-label">Day of week</label>
+                <input for="DayOfWeek" class="form-control" name="DayOfWeek" list="days" />
             </div>
             <div class="form-group">
                 <label for="Season" class="control-label">Season</label>
-                <input for="Season" class="form-control" name="Season"/>
+                <input for="Season" class="form-control" name="Season" list="seasons"/>
             </div>
             <div class="form-group">
                 <label for="Degree" class="control-label">Degree</label>
-                <input for="Degree" class="form-control" name="Degree"/>
+                <input for="Degree" class="form-control" name="Degree" />
             </div>
             <div class="form-group">
                 <label for="Humidity" class="control-label">Humidity</label>
-                <input for="Humidity" class="form-control" name="Humidity"/>
+                <input for="Humidity" class="form-control" name="Humidity" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Calculate Sell Prediction" class="btn btn-primary" />

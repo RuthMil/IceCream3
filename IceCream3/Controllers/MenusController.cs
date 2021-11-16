@@ -14,6 +14,7 @@ using System.IO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.Collections.Specialized;
+using System.Globalization;
 
 namespace IceCream3.Controllers
 {
@@ -306,5 +307,21 @@ namespace IceCream3.Controllers
                 .FirstOrDefaultAsync(m => m.Flavor == prediction);
             return View(menu);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Analytics()
+        {
+            return View(await _context.Menu.ToListAsync());
+        }
+
+        [HttpPost, ActionName("Analytics")]
+        public IActionResult Analytics(string args = "")
+        {
+            string flavor = Request.Form["Flavor"].ToString();
+            DateTime startDate = DateTime.ParseExact(Request.Form["StartDate"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            DateTime endDate = DateTime.ParseExact(Request.Form["EndDate"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            return RedirectToAction("Graph", "Orders", new { flavor = flavor, startDate=startDate, endDate= endDate });
+        }
+
     }
 }

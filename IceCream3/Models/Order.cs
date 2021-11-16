@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace IceCream3.Models
 {
@@ -8,9 +9,11 @@ namespace IceCream3.Models
         public int Id { get; set; }
 
         [Required]
+        [DisplayName("First Name")]
         public string FirstName { get; set; }
         
         [Required]
+        [DisplayName("Last Name")]
         public string LastName { get; set; }
 
         [Required]
@@ -18,6 +21,7 @@ namespace IceCream3.Models
         public string Email { get; set; }
 
         [DataType(DataType.Date)]
+        [DisplayName("Time Ordered")]
         public DateTime TimeOrdered { get; set; }
 
         public string Flavor { get; set; }
@@ -30,6 +34,7 @@ namespace IceCream3.Models
         public string Street { get; set; }
 
         [Required]
+        [DisplayName("House Number")]
         public int HouseNum { get; set; }
 
         public int TemperatureId { get; set; }

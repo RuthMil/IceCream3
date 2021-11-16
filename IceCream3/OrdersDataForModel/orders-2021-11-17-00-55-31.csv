@@ -1,0 +1,13 @@
+City,DayOfWeek,Season,Degree,Humidity,Flavor
+Tel Aviv,Monday,Autumn,23.55,47,Chocolate
+Jerusalem,Monday,Autumn,18.73,49,Strawberry
+Jerusalem,Monday,Autumn,18.73,50,Vanilla
+Paris,Monday,Autumn,7.24,96,Strawberry
+Venice,Monday,Autumn,18.87,53,Strawberry
+London,Monday,Autumn,10.83,81,Strawberry
+Jerusalem,Monday,Autumn,16.5,56,Strawberry
+New York,Tuesday,Autumn,6,68,Pistachio
+London,Tuesday,Autumn,10.23,82,Pistachio
+Tel Aviv,Tuesday,Autumn,21.86,69,Pistachio
+Madrid,Wednesday,Autumn,7.49,71,Coffee
+Tel Aviv,Wednesday,Autumn,18.7,74,Chocolate

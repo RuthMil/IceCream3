@@ -30,6 +30,7 @@ namespace IceCream3.Models
 
         [Required]
         [DataType(DataType.Date)]
+        [DisplayName("Date Added")]
         public DateTime DateAdded { get; set; }
         
     }
