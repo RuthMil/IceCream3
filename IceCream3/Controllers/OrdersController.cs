@@ -65,11 +65,31 @@ namespace IceCream3.Controllers
             {
                 _context.Add(order);
                 WeatherDAL weather = new WeatherDAL();
-                string city = order.City;
+                string address = order.Street;
+                var addressParts = address.Split(",");
+                string street = addressParts[0].Trim();
+                string city = "Jerusalem";
+                if (addressParts.Length >= 2)
+                {
+                    city = addressParts[1].Trim();
+                }
+                order.Street = street;
+                order.City = city;
+                order.HouseNum = 1;
+                if (city == "Tel Aviv-Yafo")
+                    city = "Tel Aviv";
                 Temperature temp = weather.GetWeather(city);
-                this._context.Temperature.Add(temp);
+                if (temp != null)
+                {
+                    this._context.Temperature.Add(temp);
+                    this._context.SaveChanges();
+                    order.TemperatureId = temp.Id;
+                }
+                else
+                {
+                    order.TemperatureId = 0;
+                }
                 this._context.SaveChanges();
-                order.TemperatureId = temp.Id;
                 order.TimeOrdered = DateTime.Now;
                 var menuItem = _context.Menu.Find(iceCreamId);
                 order.Flavor = menuItem.Flavor;

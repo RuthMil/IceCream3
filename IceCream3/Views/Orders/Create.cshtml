@@ -7,6 +7,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="/js/mapAPI.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDkFX9GjviOqEfApj9Le48f7HZGVchx4s&libraries=places&callback=initAutocomplete" async defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
@@ -112,7 +117,6 @@
 </head>
 <body>
     <div class="row">
-        <div class="col-75">
             <div class="container">
                 <form asp-action="Create">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -135,25 +139,9 @@
                                 <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="City" for="city"><i class="fa fa-institution"></i> City</label>
-                                <input asp-for="City" type="text" id="city" name="city" placeholder="New York">
-                                <span asp-validation-for="City" class="text-danger"></span>
-                            </div>
-                            <div class="row">
-                                <div class="col-50">
-                                    <div class="form-group">
-                                        <label asp-for="Street" for="street">Street</label>
-                                        <input asp-for="Street" type="text" id="street" name="Street" placeholder="NY">
-                                        <span asp-validation-for="Street" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-50">
-                                    <div class="form-group">
-                                        <label asp-for="HouseNum" for="number">Number</label>
-                                        <input asp-for="HouseNum" type="number" id="number" name="number" placeholder=10>
-                                        <span asp-validation-for="HouseNum" class="text-danger"></span>
-                                    </div>
-                                </div>
+                                <label asp-for="Street" for="street"><i class="fa fa-institution"></i>Full Address</label>
+                                <input asp-for="Street" type="text" id="street" name="Street" placeholder="IL" onFocus="geolocate()">
+                                <span asp-validation-for="Street" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="row">
@@ -189,7 +177,6 @@
                         </div>
                 </form>
             </div>
-        </div>
     </div>
     <div>
         <a href="@Url.Action("ItemsPage2", "Orders")">Back to Store</a>

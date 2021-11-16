@@ -24,7 +24,6 @@ namespace IceCream3.Models
 
         public int? Quantity {get; set;}
 
-        [Required]
         public string City { get; set; }
 
         [Required]
