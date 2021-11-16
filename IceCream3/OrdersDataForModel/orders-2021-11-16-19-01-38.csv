@@ -1,0 +1,17 @@
+City,DayOfWeek,Season,Degree,Humidity,Flavor
+Hogsmid,Friday,Autumn,0,0,Strawberry
+Hogsmid,Friday,Autumn,0,0,Vanila
+London,Friday,Autumn,0,0,Chocolate
+Tel Aviv,Monday,Autumn,23.55,47,Chocolate
+Jerusalem,Monday,Autumn,18.73,49,Strawberry
+Jerusalem,Monday,Autumn,18.73,50,Vanilla
+Paris,Monday,Autumn,7.24,96,Strawberry
+Venice,Monday,Autumn,18.87,53,Strawberry
+London,Monday,Autumn,10.83,81,Strawberry
+Jerusalem,Monday,Autumn,16.5,56,Strawberry
+Jerusalem,Monday,Autumn,15.39,59,Strawberry
+New York,Tuesday,Autumn,6,68,Pistachio
+ Tel Aviv-Yafo,Tuesday,Autumn,0,0,Vanilla
+Tel Aviv-Yafo,Tuesday,Autumn,0,0,Vanilla
+London,Tuesday,Autumn,10.23,82,Pistachio
+Tel Aviv-Yafo,Tuesday,Autumn,21.86,69,Pistachio

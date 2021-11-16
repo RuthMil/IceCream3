@@ -9,6 +9,7 @@ using IceCream3.Data;
 using IceCream3.Models;
 using System.Text;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace IceCream3.Controllers
 {
@@ -73,11 +74,24 @@ namespace IceCream3.Controllers
                 {
                     city = addressParts[1].Trim();
                 }
-                order.Street = street;
-                order.City = city;
-                order.HouseNum = 1;
                 if (city == "Tel Aviv-Yafo")
                     city = "Tel Aviv";
+                order.Street = street;
+                order.City = city;
+                string houseNum = "";
+                try
+                {
+                    var matches = Regex.Matches(street, @"\d+");
+                    foreach (var match in matches)
+                    {
+                        houseNum += match;
+                    }
+                    order.HouseNum = int.Parse(houseNum);
+                }
+                catch
+                {
+                    order.HouseNum = 1;
+                }
                 Temperature temp = weather.GetWeather(city);
                 if (temp != null)
                 {
